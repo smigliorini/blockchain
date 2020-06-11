@@ -5,6 +5,7 @@ import hashlib
 import base58
 import array
 import Bitcoin
+import bitcoin
 import psycopg2
 import createDatabase as data
 
@@ -258,7 +259,7 @@ def createTable():
     return data.createBlockTable() + data.createTransactionTable() + data.createAddressTable() + data.createInputTable() + data.createOutputTable()
 
 def main():
-    blockFilename = '../Bitcoin/blk00030.dat'
+    blockFilename = '../../bitcoin/blocks/blk00000.dat'
 
     with open(blockFilename, 'rb') as blockFile:
         for block in range(0, 50):
