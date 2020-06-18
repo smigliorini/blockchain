@@ -212,16 +212,16 @@ def readBlock(block):
     header_bin = header_hex.decode('hex')
     hash = hashlib.sha256(hashlib.sha256(header_bin).digest()).digest()
 
-    print("Magic Number: " + str(magicNumber))
+    """print("Magic Number: " + str(magicNumber))
     print("Blocksize: " + str(blockSize))
     print("Version: " + str(version))
     print("Previous Hash: " + str(previousHash))
     print("Merkle Hash: " + str(merkleHash))
     print("Time: " + str(creationTime))
     print("Bits: " + str(bits))
-    print("Nonce: " + str(nonce))
+    print("Nonce: " + str(nonce))"""
     print("Hash: " + str(hash.encode('hex_codec')))
-    print("Count of Transactions: " + str(countOfTransaction))
+    """print("Count of Transactions: " + str(countOfTransaction))"""
 
     for transaction in range(0, countOfTransaction):
         readTransaction(block, str(hash.encode('hex_codec')))
@@ -276,6 +276,7 @@ def main():
 
     while count < 1924:
         blockFilename = path + blockCounter(count)
+	print("lettura del file " + str(count))
         with open(blockFilename, 'rb') as blockFile:
             for block in range(0, 1):
                 readBlock(blockFile)
