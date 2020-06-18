@@ -5,8 +5,8 @@ import hashlib
 import base58
 import array
 import Bitcoin
-import bitcoin
-import psycopg2
+# import bitcoin
+# import psycopg2
 import createDatabase as data
 
 blocks = []
@@ -258,19 +258,35 @@ def deleteTable():
 def createTable():
     return data.createBlockTable() + data.createTransactionTable() + data.createAddressTable() + data.createInputTable() + data.createOutputTable()
 
+def blockCounter(count):
+    file = ''
+    if 0 <= count <= 9:
+        file = '0000'
+    elif 10 <= count <= 99:
+        file = '000'
+    elif 100 <= count <= 999:
+        file = '00'
+    elif 1000 <= count <= 9999:
+        file = '0'
+    return file + str(count) + '.dat'
+
 def main():
-    blockFilename = '../../bitcoin/blocks/blk00000.dat'
+    path = '../../bitcoin/blocks/blk'
+    count = 0
 
-    with open(blockFilename, 'rb') as blockFile:
-        for block in range(0, 50):
-            readBlock(blockFile)
+    while count < 1924:
+        blockFilename = path + blockCounter(count)
+        with open(blockFilename, 'rb') as blockFile:
+            for block in range(0, 1):
+                readBlock(blockFile)
+        count += 1
 
-    try:
-        connection = psycopg2.connect(host = "localhost", user = "postgres", password = "Gialloblu98", port = "5433", dbname = "bitcoin", connect_timeout = 3)
+    """try:
+        connection = psycopg2.connect(host = "localhost", user = "robol", password = "bit2004", port = "5437", dbname = "bitdb", connect_timeout = 3)
         cursor = connection.cursor()
 
-        """cursor.execute(deleteTable())
-        connection.commit()"""
+        cursor.execute(deleteTable())
+        connection.commit()
 
         cursor.execute(createTable())
         connection.commit()
@@ -297,7 +313,7 @@ def main():
 
     finally:
         connection.close()
-        print("PostgreSQL connection is closed")
+        print("PostgreSQL connection is closed")"""
 
 
 if __name__ == "__main__":
