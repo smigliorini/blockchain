@@ -1,2 +1,3 @@
-Spazio riservato al progetto su Ethereum
-github
+-Il programma utilizza la libreria Python web3.py
+-Per utilizzare il programma avviare database.py
+-Su PostgreSQL eseguire poi il database.sql generato dalla script
