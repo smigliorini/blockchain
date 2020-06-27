@@ -161,12 +161,14 @@ def replace_wordq(dictionary):
 #scrive la stringa insert per una tupla di accounts
 def replace_worda(dictionary,web3,user):
     
-    stringInsert = "" 
-    #verifico se l'address è un account o un contratto
-    if web3.toHex(web3.eth.getCode(dictionary[user])) == "0x":
+    stringInsert = ""
+
+    if  dictionary[user] == None :
+        stringInsert = "\n"
+    elif web3.toHex(web3.eth.getCode(dictionary[user])) == "0x":
         stringInsert = insertAccount(dictionary,web3,user)
     else :
-        stringInsert =insertContract(dictionary,web3,user)
+        stringInsert = insertContract(dictionary,web3,user)
         #print(  web3.toHex(web3.eth.getCode(dictionary[user]))  )
 
         #print("\n\n")

@@ -25,7 +25,7 @@ try:
     with open('lastblock.txt', 'r') as f:
         start = int(f.read())+1
 except FileNotFoundError:
-    start = 3500000
+    start = 3_500_014
 
 #se il Database non esiste lo creo e lo inizializzo
 file_name="database.sql"
@@ -70,7 +70,7 @@ for block in range(start, start+Nblocks):
 
         file1.write(replace_worda(quick_table,web3,"from"))
         file1.write(replace_worda(quick_table,web3,"to"))
-       
+        
     #aggiungo fee totali al blocco
     file1.write(replace_wordFeeBlock(totFee,block))    
     file1.close()
