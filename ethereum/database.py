@@ -48,9 +48,9 @@ for block in range(start, start+Nblocks):
     
     #calcolo il valore statico di ricompensa 
     totFee = 0
-    if block < 4_370_000 : 
+    if block < 4370000 : 
         totFee = 5
-    elif block < 7_280_000 :
+    elif block < 7280000 :
          totFee = 3
     else :
         totFee = 2
