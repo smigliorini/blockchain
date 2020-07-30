@@ -177,7 +177,7 @@ def replace_worda(dictionary,web3,user):
     return stringInsert 
     
 def replace_wordFeeBlock(totFee,block):
-   return "UPDATE block \n SET totalFee ="+str(totFee)+"\n WHERE blockNumber = "+str(block)+";\n\n"
+   return "UPDATE block \n SET totalFee ="+str(totFee)+"\n WHERE blockNumber = "+str(block)+";\n"
 
                 
     

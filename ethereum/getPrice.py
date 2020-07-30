@@ -8,5 +8,5 @@ def getPriceAtDate(Date):
         for row in csv_reader:
             if row['Date'] == Date  :
                 return row['Closing Price (USD)']
-        return ""    
+        return "0"    
    
