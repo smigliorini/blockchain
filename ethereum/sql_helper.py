@@ -14,7 +14,7 @@ def create_sql():
      difficulty TEXT, 
      extraData TEXT, 
      gasLimit BIGINT, 
-     miner TEXT, 
+     miner TEXT , 
      mixHash TEXT,
      parentHash TEXT, 
      receiptsRoot TEXT, 
