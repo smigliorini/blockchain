@@ -43,7 +43,7 @@ def create_sql():
     \n
     CREATE TABLE IF NOT EXISTS TX (
      txHash TEXT PRIMARY KEY,    
-     blockNumber BIGINT REFERENCES block(blockNumber),
+     blockNumber BIGINT,
      contractAddress TEXT,
      cumulativeGasUsed NUMERIC, 
      gas NUMERIC, 
