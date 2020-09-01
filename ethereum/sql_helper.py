@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 from getPrice import *
+from getContract import *
 
 #inizializza il file sql  con create table e gli index  
 def create_sql():
@@ -14,7 +15,7 @@ def create_sql():
      difficulty TEXT, 
      extraData TEXT, 
      gasLimit BIGINT, 
-     miner TEXT , 
+     miner TEXT, 
      mixHash TEXT,
      parentHash TEXT, 
      receiptsRoot TEXT, 
@@ -43,7 +44,7 @@ def create_sql():
     \n
     CREATE TABLE IF NOT EXISTS TX (
      txHash TEXT PRIMARY KEY,    
-     blockNumber BIGINT,
+     blockNumber BIGINT REFERENCES block(blockNumber),
      contractAddress TEXT,
      cumulativeGasUsed NUMERIC, 
      gas NUMERIC, 
@@ -70,7 +71,9 @@ def create_sql():
     \n
     
     CREATE TABLE IF NOT EXISTS contract(
-     address TEXT PRIMARY KEY);
+     address TEXT PRIMARY KEY
+     codeSize INTEGER ;
+     );
     """
     "\n"            
                 
@@ -191,9 +194,17 @@ def insertAccount(dictionary,web3,user):
     
 def insertContract(dictionary,web3,user):
     contractAdd = dictionary[user]
-    contractInsert = "INSERT INTO contract VALUES(\'" + contractAdd +"\') "+\
-        "ON CONFLICT(address)  DO UPDATE SET address = "+\
-        "\'"+contractAdd+"\';\n\n"
+    #aggiungo la dimensione del contratto
+    code = getContractCode(contractAdd)
+    #conto quanti caratteri ci sono nel contratto
+    charCount = 0
+    for string in code:
+        for char in string:
+            charCount = charCount + 1  
+    
+    contractInsert = "INSERT INTO contract VALUES(\'" + contractAdd +"\' ," + charCount + ") "+\
+        "ON CONFLICT(address)  DO UPDATE SET (address,size) = ("+\
+        "\'"+contractAdd+"\' ,"+charCount+");\n\n"
     return contractInsert
     
     

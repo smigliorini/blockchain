@@ -25,7 +25,7 @@ try:
     with open('lastblock.txt', 'r') as f:
         start = int(f.read())+1
 except FileNotFoundError:
-    start = 3_500_000
+    start = 2_700_000
 
 #se il Database non esiste lo creo e lo inizializzo
 file_name="database.sql"
@@ -48,9 +48,9 @@ for block in range(start, start+Nblocks):
     
     #calcolo il valore statico di ricompensa 
     totFee = 0
-    if block < 4370000 : 
+    if block < 4_370_000 : 
         totFee = 5
-    elif block < 7280000 :
+    elif block < 7_280_000 :
          totFee = 3
     else :
         totFee = 2
