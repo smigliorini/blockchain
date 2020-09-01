@@ -203,7 +203,7 @@ def insertContract(dictionary,web3,user):
             charCount = charCount + 1  
     
     contractInsert = "INSERT INTO contract VALUES(\'" + contractAdd +"\' ," + charCount + ") "+\
-        "ON CONFLICT(address)  DO UPDATE SET (address,size) = ("+\
+        "ON CONFLICT(address)  DO UPDATE SET (address,codeSize) = ("+\
         "\'"+contractAdd+"\' ,"+charCount+");\n\n"
     return contractInsert
     
