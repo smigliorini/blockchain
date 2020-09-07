@@ -184,3 +184,5 @@ def countLTC (cur, pubkey_hash, address, isSW, update=False):
 
 def query(cur, statem):
     cur.execute(statem)
+    for record in cur:
+        print(record, end='\n')
