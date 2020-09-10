@@ -71,8 +71,9 @@ def create_sql():
     \n
     
     CREATE TABLE IF NOT EXISTS contract(
-     address TEXT PRIMARY KEY
-     codeSize INTEGER ;
+     address TEXT PRIMARY KEY ,
+     codeSize INTEGER ,
+     functionNumber INTEGER
      );
     """
     "\n"            
@@ -196,15 +197,33 @@ def insertContract(dictionary,web3,user):
     contractAdd = dictionary[user]
     #aggiungo la dimensione del contratto
     code = getContractCode(contractAdd)
+    
+    
+    
     #conto quanti caratteri ci sono nel contratto
     charCount = 0
+    funCount = 0
+    oracleUser = False
+    
     for string in code:
         for char in string:
             charCount = charCount + 1  
-    
-    contractInsert = "INSERT INTO contract VALUES(\'" + contractAdd +"\' ," + str(charCount) + ") "+\
-        "ON CONFLICT(address)  DO UPDATE SET (address,codeSize) = ("+\
-        "\'"+contractAdd+"\' ,"+str(charCount)+");\n\n"
+            if char.lower() == "def" or char.lower() == "function" :
+                funCount = funCount + 1  
+            if char == "clientOfdAppBridge" \
+            or   char == "usingProvable"    \
+            or   char == "usingProvable"    \
+            or   char == "usingOraclize"   \
+            or   char == "chainlinkClient" \
+            or   char == "TownCrier"       \
+            or   char == "UsingWitnet"     :
+                oracleUser = True
+    print(oracleUser)
+    print(funCount)
+    print("\n")
+    contractInsert = "INSERT INTO contract VALUES(\'" + contractAdd +"\' ," + str(charCount) + "," +  str(funCount) + ") "+\
+        "ON CONFLICT(address)  DO UPDATE SET (address,size,functionNumber) = ("+\
+        "\'"+contractAdd+"\' ,"+ str(charCount) + ","  + str(funCount) + ");\n\n"
     return contractInsert
     
     

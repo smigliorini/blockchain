@@ -25,7 +25,7 @@ try:
     with open('lastblock.txt', 'r') as f:
         start = int(f.read())+1
 except FileNotFoundError:
-    start = 2_700_000
+    start = 1000000
 
 #se il Database non esiste lo creo e lo inizializzo
 file_name="database.sql"
