@@ -182,6 +182,20 @@ def countLTC (cur, pubkey_hash, address, isSW, update=False):
     count=round((count/100000000), 8)
     return count
 
+def find_follblock(cur, block_id):
+    cur.execute("select b2.block_id from block b1, block b2 where b1.block_id<b2.block_id and b2.block_id in (select min(b3.block_id) from block b3 where b3.block_id>b1.block_id) and b1.block_id= %s", (block_id,))
+    res=cur.fetchone()
+    if res is None:
+        return
+    return res[0]
+    
+def find_prevblock(cur, block_id):
+    cur.execute("select b2.block_id from block b1, block b2 where b1.block_id>b2.block_id and b2.block_id in (select max(b3.block_id) from block b3 where b3.block_id<b1.block_id) and b1.block_id= %s", (block_id,))
+    res=cur.fetchone()
+    if res is None:
+        return
+    return res[0]
+
 def query(cur, statem):
     cur.execute(statem)
     for record in cur:
