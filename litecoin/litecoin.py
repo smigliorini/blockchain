@@ -183,6 +183,18 @@ def countLTC (cur, pubkey_hash, address, isSW, update=False):
     count=round((count/100000000), 8)
     return count
 
+def convert_blockhash(cur, block_hash):
+    if block_hash == '0000050c34a64b415b6b15b37f2216634b5b1669cb9a2e38d76f7213b0671e00':
+        return '12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2'
+    cur.execute("select tx_hash from block join block_tx bt on block.block_id=bt.block_id join tx on bt.tx_id=tx.tx_id where block.block_hash like %s", (block_hash,))
+    res=cur.fetchone()
+    if res is None:
+        return
+    bid=res[0]
+    dic=blockcypher.get_transaction_details(bid, 'ltc')
+    bh=dic['block_hash']
+    return bh
+
 def find_prevblock(cur, block_id):
     if block_id == '1':
         return None
