@@ -2,6 +2,7 @@ import hashlib
 import base58
 import bech32
 import binascii
+import blockcypher
 from decimal import *
 
 def sha256(hexstr):
@@ -182,15 +183,18 @@ def countLTC (cur, pubkey_hash, address, isSW, update=False):
     count=round((count/100000000), 8)
     return count
 
-def find_follblock(cur, block_id):
-    cur.execute("select b2.block_id from block b1, block b2 where b1.block_id<b2.block_id and b2.block_id in (select min(b3.block_id) from block b3 where b3.block_id>b1.block_id) and b1.block_id= %s", (block_id,))
+def find_prevblock(cur, block_id):
+    cur.execute("select tx_hash from block join block_tx bt on block.block_id=bt.block_id join tx on bt.tx_id=tx.tx_id where block.block_id = %s", (block_id,))
     res=cur.fetchone()
     if res is None:
         return
-    return res[0]
-    
-def find_prevblock(cur, block_id):
-    cur.execute("select b2.block_id from block b1, block b2 where b1.block_id>b2.block_id and b2.block_id in (select max(b3.block_id) from block b3 where b3.block_id<b1.block_id) and b1.block_id= %s", (block_id,))
+    bid=res[0]
+    dic=blockcypher.get_transaction_details(bid, 'ltc')
+    bh=dic['block_hash']
+    prevbh=blockcypher.get_prev_block_hash(bh, 'ltc')
+    dic=blockcypher.get_block_overview(prevbh, 'ltc')
+    tid=dic['txids'][0]
+    cur.execute("select block.block_id from block join block_tx bt on block.block_id=bt.block_id join tx on bt.tx_id=tx.tx_id where tx.tx_hash like %s", (tid,))
     res=cur.fetchone()
     if res is None:
         return
