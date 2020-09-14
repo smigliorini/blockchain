@@ -184,6 +184,10 @@ def countLTC (cur, pubkey_hash, address, isSW, update=False):
     return count
 
 def find_prevblock(cur, block_id):
+    if block_id == '1':
+        return None
+    if block_id == '2':
+        return 1
     cur.execute("select tx_hash from block join block_tx bt on block.block_id=bt.block_id join tx on bt.tx_id=tx.tx_id where block.block_id = %s", (block_id,))
     res=cur.fetchone()
     if res is None:
