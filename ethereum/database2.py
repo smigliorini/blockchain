@@ -19,7 +19,7 @@ web3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/6484d4add39247bb8a0d
 #web3 = Web3(Web3.IPCProvider('/your-path-to/geth.ipc'))
 
 
-#numero dei blocchi che volgio caricare
+#numero dei blocchi che voglio caricare
 Nblocks = 10
 start_time = time.time()
 #apro lastblock.txt per vedere da quale blocco partire , altrimenti parto dal blocco start
