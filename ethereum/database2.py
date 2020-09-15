@@ -16,7 +16,7 @@ import psycopg2
 web3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/6484d4add39247bb8a0da7e8ae5ce08a"))
 
 # 2. or connection via local node 
-#web3 = Web3(Web3.IPCProvider('/your-path-to/geth.ipc'))
+web3 = Web3(Web3.IPCProvider('/your-path-to/geth.ipc'))
 
 
 #numero dei blocchi che volgio caricare
