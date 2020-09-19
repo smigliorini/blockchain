@@ -2,7 +2,6 @@ import hashlib
 import base58
 import bech32
 import binascii
-import blockcypher
 from decimal import *
 
 def sha256(hexstr):
