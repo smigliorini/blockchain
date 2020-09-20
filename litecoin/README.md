@@ -6,3 +6,4 @@ Le due funzioni di update invece per aggiornare le entità year e year_month, ut
 Il file myAppConfig.py invece contiene le informazioni per collegarsi al database attraverso psycopg2.
 Il file abe-pg.conf contiene le impostazioni di configurazione per far funzionare Abe sul database del server.
 Il file ltc_scrypt.so contiene il modulo per far funzionare Abe con la catena di Litecoin.
+Questi ultimi due vanno inseriti nella cartella di Abe, scaricabile da github all'indirizzo https://github.com/bitcoin-abe/bitcoin-abe.
