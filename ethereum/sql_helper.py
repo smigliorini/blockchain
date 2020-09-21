@@ -216,7 +216,6 @@ def insertContract(dictionary,web3,user):
                 funCount = funCount + 1  
             if char == "clientOfdAppBridge" \
             or   char == "usingProvable"    \
-            or   char == "usingProvable"    \
             or   char == "usingOraclize"   \
             or   char == "chainlinkClient" \
             or   char == "TownCrier"       \
