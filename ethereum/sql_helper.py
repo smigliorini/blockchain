@@ -78,11 +78,11 @@ def create_sql():
     """
     "\n"            
                 
-    "CREATE INDEX index_quick ON Quick(value, sender, recipient);\n"
-    "CREATE INDEX index_TX ON TX(blockNumber, status);\n"
-    "CREATE INDEX index_block ON block(timestamp);\n"
-    "CREATE INDEX index_account ON account(address);\n"
-    "CREATE INDEX index_contract ON contract(address);\n\n"                
+    "CREATE INDEX IF NOT EXISTS index_quick ON Quick(value, sender, recipient);\n"
+    "CREATE INDEX IF NOT EXISTS index_TX ON TX(blockNumber, status);\n"
+    "CREATE INDEX IF NOT EXISTS index_block ON block(timestamp);\n"
+    "CREATE INDEX IF NOT EXISTS index_account ON account(address);\n"
+    "CREATE INDEX IF NOT EXISTS index_contract ON contract(address);\n\n"                
     
     )
     file1.close()
