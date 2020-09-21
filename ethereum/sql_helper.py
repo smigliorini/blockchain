@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 from getPrice import *
 from getContract import *
+from getTokens import *
 
 #inizializza il file sql  con create table e gli index  
 def create_sql():
@@ -67,7 +68,8 @@ def create_sql():
     CREATE TABLE IF NOT EXISTS account(
      address TEXT PRIMARY KEY,
      balance DECIMAL,
-     txCount INTEGER);
+     txCount INTEGER,
+     tokenBalance BIGINT);
     \n
     
     CREATE TABLE IF NOT EXISTS contract(
@@ -188,9 +190,10 @@ def replace_wordFeeBlock(totFee,block):
  
 def insertAccount(dictionary,web3,user):
     accountAdd = dictionary[user]
-    accountInsert = "INSERT INTO account VALUES(\'" + accountAdd +"\',"+ str(web3.eth.getBalance(accountAdd)) + ","+str(web3.eth.getTransactionCount(accountAdd))+") "+\
-            "ON CONFLICT(address)  DO UPDATE SET (address,balance,txcount) = "+\
-            "(\'"+accountAdd+"\',"+str(web3.eth.getBalance(accountAdd))+","+  str(web3.eth.getTransactionCount(accountAdd)) +");\n\n"
+    tokenBalance = getTokenBalance(accountAdd)
+    accountInsert = "INSERT INTO account VALUES(\'" + accountAdd +"\',"+ str(web3.eth.getBalance(accountAdd)) + ","+str(web3.eth.getTransactionCount(accountAdd))+", "+\
+            str(tokenBalance) + ")ON CONFLICT(address)  DO UPDATE SET (address,balance,txcount,tokenBalance) = "+\
+            "(\'"+accountAdd+"\',"+str(web3.eth.getBalance(accountAdd))+","+  str(web3.eth.getTransactionCount(accountAdd)) +"," + str(tokenBalance) + " );\n\n"
     return accountInsert
     
 def insertContract(dictionary,web3,user):
