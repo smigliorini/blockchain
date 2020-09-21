@@ -1,3 +1,4 @@
+
 from datetime import datetime as dt
 from getPrice import *
 from getContract import *
@@ -68,15 +69,14 @@ def create_sql():
     CREATE TABLE IF NOT EXISTS account(
      address TEXT PRIMARY KEY,
      balance DECIMAL,
-     txCount INTEGER,
-     tokenBalance BIGINT);
+     txCount INTEGER);
     \n
     
     CREATE TABLE IF NOT EXISTS contract(
      address TEXT PRIMARY KEY ,
      codeSize INTEGER ,
-     functionNumber INTEGER
-     );
+     functionNumber INTEGER,
+     tokenTotalSupply BIGINT );
     """
     "\n"            
                 
@@ -190,10 +190,11 @@ def replace_wordFeeBlock(totFee,block):
  
 def insertAccount(dictionary,web3,user):
     accountAdd = dictionary[user]
-    tokenBalance = getTokenBalance(accountAdd)
-    accountInsert = "INSERT INTO account VALUES(\'" + accountAdd +"\',"+ str(web3.eth.getBalance(accountAdd)) + ","+str(web3.eth.getTransactionCount(accountAdd))+", "+\
-            str(tokenBalance) + ")ON CONFLICT(address)  DO UPDATE SET (address,balance,txcount,tokenBalance) = "+\
-            "(\'"+accountAdd+"\',"+str(web3.eth.getBalance(accountAdd))+","+  str(web3.eth.getTransactionCount(accountAdd)) +"," + str(tokenBalance) + " );\n\n"
+    
+    
+    accountInsert = "INSERT INTO account VALUES(\'" + accountAdd +"\',"+ str(web3.eth.getBalance(accountAdd)) + ","+str(web3.eth.getTransactionCount(accountAdd))+" "+\
+            ")ON CONFLICT(address)  DO UPDATE SET (address,balance,txcount) = "+\
+            "(\'"+accountAdd+"\',"+str(web3.eth.getBalance(accountAdd))+","+  str(web3.eth.getTransactionCount(accountAdd)) + " );\n\n"
     return accountInsert
     
 def insertContract(dictionary,web3,user):
@@ -201,7 +202,7 @@ def insertContract(dictionary,web3,user):
     #aggiungo la dimensione del contratto
     code = getContractCode(contractAdd)
     
-    
+    tokenTransf = getTokenBalance(contractAdd)
     
     #conto quanti caratteri ci sono nel contratto
     charCount = 0
@@ -224,9 +225,9 @@ def insertContract(dictionary,web3,user):
     print(oracleUser)
     print(funCount)
     print("\n")
-    contractInsert = "INSERT INTO contract VALUES(\'" + contractAdd +"\' ," + str(charCount) + "," +  str(funCount) + ") "+\
-        "ON CONFLICT(address)  DO UPDATE SET (address,size,functionNumber) = ("+\
-        "\'"+contractAdd+"\' ,"+ str(charCount) + ","  + str(funCount) + ");\n\n"
+    contractInsert = "INSERT INTO contract VALUES(\'" + contractAdd +"\' ," + str(charCount) + "," +  str(funCount) + "," + str(tokenTransf) +") "+\
+        "ON CONFLICT(address)  DO UPDATE SET (address,size,functionNumber,tokenTotalSupply) = ("+\
+        "\'"+contractAdd+"\' ,"+ str(charCount) + ","  + str(funCount) +","+ str(tokenTransf) + " );\n\n"
     return contractInsert
     
     
