@@ -197,6 +197,8 @@ def find_prevblock(cur, block_id):
     return res[0]
 
 def convert_blockhash(cur, block_hash):
+    if block_hash == '000000000000018c0a524f89e303d47cb31d9a03d1a51988858b773de55aeaae':
+        return '199dd8c14cda8e0579a3b95bd2278241191bbe369f049ca934d773895bf1db8f'
     cur.execute("select block_id from block where block_hash like %s",(block_hash,))
     res=cur.fetchone()
     if res is None:
