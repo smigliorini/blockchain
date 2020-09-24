@@ -35,12 +35,10 @@ def create_sql():
     \n
     CREATE TABLE IF NOT EXISTS Quick (
      txHash TEXT PRIMARY KEY,
-     balanceFrom TEXT,
-     balanceTo TEXT,
      blockNumber BIGINT REFERENCES block(blockNumber), 
      sender TEXT,
      nonce BIGINT, 
-     recipient TEXT,
+     receiver TEXT,
      value TEXT);"""
     """
     \n
@@ -147,7 +145,7 @@ def replace_wordt(dictionary):
 
 # scrive la stringa insert per una tupla di quick 
 def replace_wordq(dictionary):
-    s ="""\n INSERT INTO Quick VALUES (\' txHash \',\' balanceFrom \',\' balanceTo \', blockNumber ,\' from \', nonce ,\' to \',\' value \'); \n"""
+    s ="""\n INSERT INTO Quick VALUES (\' txHash \', blockNumber ,\' from \', nonce ,\' to \',\' value \'); \n"""
     s = ' '.join([str(dictionary.get(i, i)) for i in s.split()])
     i=0
     pair=0
