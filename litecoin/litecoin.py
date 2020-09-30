@@ -2,6 +2,7 @@ import hashlib
 import base58
 import bech32
 import binascii
+import blockcypher
 from decimal import *
 
 def sha256(hexstr):
@@ -197,8 +198,15 @@ def find_prevblock(cur, block_id):
     return res[0]
 
 def convert_blockhash(cur, block_hash):
-    if block_hash == '000000000000018c0a524f89e303d47cb31d9a03d1a51988858b773de55aeaae':
-        return '199dd8c14cda8e0579a3b95bd2278241191bbe369f049ca934d773895bf1db8f'
+    cur.execute("select b.block_hash from block b where b.block_id in (select max(b2.block_id) from block b2)")
+    res=cur.fetchone()
+    if block_hash == res[0]:
+        cur.execute("select tx_hash from block join block_tx bt on block.block_id=bt.block_id join tx on bt.tx_id=tx.tx_id where block_hash like %s", (block_hash,))
+        res=cur.fetchone()
+        bid=res[0]
+        dic=blockcypher.get_transaction_details(bid, 'ltc')
+        bh=dic['block_hash']
+        return bh
     cur.execute("select block_id from block where block_hash like %s",(block_hash,))
     res=cur.fetchone()
     if res is None:
