@@ -11,7 +11,7 @@ with connessione as con:
     con.autocommit=True
     with con.cursor() as cur:
         ep=1262304000
-        for i in range(2010, 2020):
+        for i in range(2010, 2021):
             if isleap(i):
                 ep2=ep+31622400
             else:
