@@ -1,6 +1,7 @@
 Spazio riservato al progetto su Litecoin
 github
 
+La tesina contiene tutta la ricerca.
 La libreria litecoin.py contiene una serie di funzioni utili per interagire col database creato da Abe attraverso l'entità balance, che va creata manualmente.
 I due sorgenti year.py e month.py servono per riempire le entità year e year_month con gli anni dal 2010 al 2020.
 Il sorgente prices.py serve per riempire l'entità price con uno storico scaricabile da internet. Il nome del file viene dato come argomento da linea di comando e l'id della catena va aggiunto manualmente a parte.
