@@ -39,7 +39,7 @@ def create_sql():
      sender TEXT,
      nonce BIGINT, 
      receiver TEXT,
-     value TEXT);"""
+     value NUMERIC);"""
     """
     \n
     CREATE TABLE IF NOT EXISTS TX (
@@ -145,7 +145,7 @@ def replace_wordt(dictionary):
 
 # scrive la stringa insert per una tupla di quick 
 def replace_wordq(dictionary):
-    s ="""\n INSERT INTO Quick VALUES (\' txHash \', blockNumber ,\' from \', nonce ,\' to \',\' value \'); \n"""
+    s ="""\n INSERT INTO Quick VALUES (\' txHash \', blockNumber ,\' from \', nonce ,\' to \', value ); \n"""
     s = ' '.join([str(dictionary.get(i, i)) for i in s.split()])
     i=0
     pair=0
